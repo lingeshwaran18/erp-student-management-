@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Faculty Dashboard - ERP</title>
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, Helvetica, sans-serif; }
+    body { background:#f3f4f6; display:flex; min-height:100vh; }
+    .sidebar { width:230px; background:#6b21a8; color:white; min-height:100vh; padding:20px 0; }
+    .sidebar .logo { display:flex; align-items:center; gap:10px; padding:0 20px 20px 20px; border-bottom:1px solid rgba(255,255,255,0.15); }
+    .sidebar .logo .icon { font-size:26px; }
+    .sidebar .logo h2 { font-size:18px; }
+    .sidebar .logo p { font-size:11px; opacity:0.8; }
+    .sidebar nav { margin-top:15px; }
+    .sidebar nav a { display:block; color:white; text-decoration:none; padding:11px 20px; font-size:14px; opacity:0.9; }
+    .sidebar nav a:hover { background:rgba(255,255,255,0.1); }
+    .sidebar nav a.active { background:#9333ea; opacity:1; font-weight:bold; }
+    .main { flex:1; padding:25px 30px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; }
+    .topbar h1 { font-size:20px; }
+    .topbar p { font-size:13px; color:#6b7280; }
+    .badge { background:#6b21a8; color:white; padding:6px 16px; border-radius:20px; font-size:13px; font-weight:bold; }
+    .stats { display:grid; grid-template-columns:repeat(4, 1fr); gap:18px; margin-bottom:25px; }
+    .stat-card { background:white; border-radius:12px; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
+    .stat-card .label { font-size:13px; color:#6b7280; margin-bottom:6px; }
+    .stat-card .value { font-size:24px; font-weight:bold; }
+    .stat-card .sub { font-size:12px; color:#9ca3af; margin-top:4px; }
+    .panels { display:grid; grid-template-columns:1.3fr 1fr; gap:18px; margin-bottom:20px; }
+    .panel { background:white; border-radius:12px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
+    .panel h3 { font-size:15px; margin-bottom:15px; }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    th { text-align:left; color:#6b7280; font-weight:600; padding-bottom:8px; }
+    td { padding:8px 0; border-top:1px solid #f0f0f0; }
+    .activity-item { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #f0f0f0; font-size:13px; }
+    .activity-item:last-child { border-bottom:none; }
+    .activity-item .time { color:#9ca3af; font-size:11px; }
+    .view-all { color:#9333ea; font-size:13px; text-decoration:none; display:block; margin-top:10px; }
+    .quick-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin-top:5px; }
+    .quick-btn { background:#faf5ff; border:1px solid #e9d5ff; border-radius:10px; text-align:center; padding:14px 8px; font-size:12px; color:#6b21a8; font-weight:600; }
+    .quick-btn .icon { font-size:20px; display:block; margin-bottom:6px; }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="logo">
+        <div class="icon">🎓</div>
+        <div>
+            <h2>EduERP</h2>
+            <p>Faculty Portal</p>
+        </div>
+    </div>
+    <nav>
+        <a href="#" class="active">🏠 Dashboard</a>
+        <a href="#">👤 My Profile</a>
+        <a href="#">🏫 My Classes</a>
+        <a href="#">📊 Attendance</a>
+        <a href="#">📝 Marks Entry</a>
+        <a href="#">📋 Assignments</a>
+        <a href="#">📚 Study Materials</a>
+        <a href="#">🕒 Time Table</a>
+        <a href="#">🔔 Notifications</a>
+        <a href="/logout/">🚪 Logout</a>
+    </nav>
+</div>
+
+<div class="main">
+    <div class="topbar">
+        <div>
+            <h1>Welcome, {{ request.user.username|title }} 👋</h1>
+            <p>Professor - CSE Department</p>
+        </div>
+        <span class="badge">FACULTY DASHBOARD</span>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card">
+            <div class="label">🏫 Classes Assigned</div>
+            <div class="value">5</div>
+            <div class="sub">This Semester</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">👥 Total Students</div>
+            <div class="value">132</div>
+            <div class="sub">Across Classes</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">📊 Attendance Marked</div>
+            <div class="value">92%</div>
+            <div class="sub">This Month</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">📝 Pending Evaluations</div>
+            <div class="value">28</div>
+            <div class="sub">Answer Scripts</div>
+        </div>
+    </div>
+
+    <div class="panels">
+        <div class="panel">
+            <h3>Class Overview</h3>
+            <table>
+                <tr><th>Class</th><th>Subject</th><th>Students</th></tr>
+                <tr><td>CSE 3A</td><td>Data Structures</td><td>68</td></tr>
+                <tr><td>CSE 3B</td><td>DBMS</td><td>64</td></tr>
+                <tr><td>CSE 2A</td><td>OOPs</td><td>62</td></tr>
+                <tr><td>CSE 2B</td><td>Computer Networks</td><td>58</td></tr>
+            </table>
+            <a href="#" class="view-all">View All Classes →</a>
+        </div>
+        <div class="panel">
+            <h3>Recent Activities</h3>
+            <div class="activity-item"><span>Marked attendance for Data Structures</span></div>
+            <div class="activity-item"><span>Uploaded notes for DBMS</span></div>
+            <div class="activity-item"><span>New assignment created for OOPs</span></div>
+            <a href="#" class="view-all">View All Activities →</a>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>Quick Actions</h3>
+        <div class="quick-grid">
+            <div class="quick-btn"><span class="icon">✅</span>Mark Attendance</div>
+            <div class="quick-btn"><span class="icon">📝</span>Enter Marks</div>
+            <div class="quick-btn"><span class="icon">➕</span>Create Assignment</div>
+            <div class="quick-btn"><span class="icon">📤</span>Upload Material</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Dashboard - ERP</title>
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, Helvetica, sans-serif; }
+    body { background:#f3f4f6; display:flex; min-height:100vh; }
+    .sidebar { width:230px; background:#1e3a8a; color:white; min-height:100vh; padding:20px 0; }
+    .sidebar .logo { display:flex; align-items:center; gap:10px; padding:0 20px 20px 20px; border-bottom:1px solid rgba(255,255,255,0.15); }
+    .sidebar .logo .icon { font-size:26px; }
+    .sidebar .logo h2 { font-size:18px; }
+    .sidebar .logo p { font-size:11px; opacity:0.8; }
+    .sidebar nav { margin-top:15px; }
+    .sidebar nav a { display:block; color:white; text-decoration:none; padding:11px 20px; font-size:14px; opacity:0.9; }
+    .sidebar nav a:hover { background:rgba(255,255,255,0.1); }
+    .sidebar nav a.active { background:#2563eb; opacity:1; font-weight:bold; }
+    .main { flex:1; padding:25px 30px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; }
+    .topbar h1 { font-size:20px; }
+    .topbar p { font-size:13px; color:#6b7280; }
+    .badge { background:#1e3a8a; color:white; padding:6px 16px; border-radius:20px; font-size:13px; font-weight:bold; }
+    .stats { display:grid; grid-template-columns:repeat(4, 1fr); gap:18px; margin-bottom:25px; }
+    .stat-card { background:white; border-radius:12px; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
+    .stat-card .label { font-size:13px; color:#6b7280; margin-bottom:6px; }
+    .stat-card .value { font-size:24px; font-weight:bold; }
+    .stat-card .sub { font-size:12px; color:#9ca3af; margin-top:4px; }
+    .panels { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:20px; }
+    .panel { background:white; border-radius:12px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
+    .panel h3 { font-size:15px; margin-bottom:15px; }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    th { text-align:left; color:#6b7280; font-weight:600; padding-bottom:8px; }
+    td { padding:8px 0; border-top:1px solid #f0f0f0; }
+    .grade { color:#16a34a; font-weight:bold; }
+    .class-item, .assign-item { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #f0f0f0; font-size:13px; }
+    .class-item:last-child, .assign-item:last-child { border-bottom:none; }
+    .due { color:#dc2626; font-size:11px; font-weight:bold; }
+    .view-all { color:#2563eb; font-size:13px; text-decoration:none; display:block; margin-top:10px; }
+    .ring { width:110px; height:110px; border-radius:50%; background:conic-gradient(#16a34a 0% 86%, #e5e7eb 86% 100%); display:flex; align-items:center; justify-content:center; margin:0 auto; }
+    .ring-inner { width:80px; height:80px; background:white; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .ring-inner .pct { font-size:18px; font-weight:bold; }
+    .ring-inner .lbl { font-size:10px; color:#9ca3af; }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="logo">
+        <div class="icon">🎓</div>
+        <div>
+            <h2>EduERP</h2>
+            <p>Student Portal</p>
+        </div>
+    </div>
+    <nav>
+        <a href="#" class="active">🏠 Dashboard</a>
+        <a href="#">👤 My Profile</a>
+        <a href="#">📊 Attendance</a>
+        <a href="#">📝 Marks</a>
+        <a href="#">📋 Assignments</a>
+        <a href="#">📚 Study Materials</a>
+        <a href="#">🕒 Timetable</a>
+        <a href="#">📅 Exam Schedule</a>
+        <a href="#">💰 Fee & Payments</a>
+        <a href="#">🔔 Notifications</a>
+        <a href="/logout/">🚪 Logout</a>
+    </nav>
+</div>
+
+<div class="main">
+    <div class="topbar">
+        <div>
+            <h1>Welcome, {{ request.user.username|title }} 👋</h1>
+            <p>B.Tech CSE - 3rd Year</p>
+        </div>
+        <span class="badge">STUDENT DASHBOARD</span>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card">
+            <div class="label">📊 Attendance</div>
+            <div class="value">86.45%</div>
+            <div class="sub">This Month</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">🎓 CGPA</div>
+            <div class="value">8.27</div>
+            <div class="sub">Till 4th Semester</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">📋 Pending Assignments</div>
+            <div class="value">2</div>
+            <div class="sub">Due Soon</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">💰 Fees Due</div>
+            <div class="value">₹2,500</div>
+            <div class="sub">1 Pending</div>
+        </div>
+    </div>
+
+    <div class="panels">
+        <div class="panel">
+            <h3>Attendance Overview</h3>
+            <div class="ring">
+                <div class="ring-inner"><div class="pct">86.45%</div><div class="lbl">Overall</div></div>
+            </div>
+        </div>
+        <div class="panel">
+            <h3>Recent Marks</h3>
+            <table>
+                <tr><th>Subject</th><th>Internal</th><th>External</th><th>Grade</th></tr>
+                <tr><td>Data Structures</td><td>18</td><td>68</td><td class="grade">A</td></tr>
+                <tr><td>DBMS</td><td>19</td><td>72</td><td class="grade">A+</td></tr>
+                <tr><td>Operating Systems</td><td>17</td><td>63</td><td class="grade">A</td></tr>
+            </table>
+            <a href="#" class="view-all">View All Marks →</a>
+        </div>
+    </div>
+
+    <div class="panels">
+        <div class="panel">
+            <h3>Upcoming Classes (Today)</h3>
+            <div class="class-item"><span>09:00 - 10:00 Data Structures (Room 301)</span></div>
+            <div class="class-item"><span>10:15 - 11:15 DBMS (Room 302)</span></div>
+            <div class="class-item"><span>11:30 - 12:30 Operating Systems (Room 303)</span></div>
+            <a href="#" class="view-all">View Full Timetable →</a>
+        </div>
+        <div class="panel">
+            <h3>Upcoming Assignments</h3>
+            <div class="assign-item"><span>Web Technologies Assignment</span><span class="due">Due Soon</span></div>
+            <div class="assign-item"><span>DBMS Mini Project</span><span class="due">Upcoming</span></div>
+            <a href="#" class="view-all">View All Assignments →</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
